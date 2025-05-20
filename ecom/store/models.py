@@ -6,6 +6,8 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+    class Meta:
+        verbose_name_plural = 'categories'
 
 class Customer(models.Model):
     first_name = models.CharField(max_length=50)
@@ -19,10 +21,14 @@ class Customer(models.Model):
 
 class Product(models.Model):
     name= models.CharField(max_length=50)
-    price= models.DecimalField( max_digits=20, default=0, decimal_places=7)
+    price= models.DecimalField( max_digits=20, default=0, decimal_places=2)
     category= models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
     description= models.CharField(max_length=50, default='', blank=True, null=True)
     image= models.ImageField(upload_to='uploads/product/')
+    #Add Sale Stuff
+
+    is_sale = models.BooleanField(default=False)
+    sale_price = models.DecimalField(default=0, decimal_places=2, max_digits=6)
 
     def __str__(self):
         return self.name
